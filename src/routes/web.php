@@ -11,6 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+use App\Http\Controllers\BookController;
+
+Route::get('/', [BookController::class, 'index'])->name('home');
+
+Route::get('/search', function () {
+    return view('search');
 });
+
+Route::delete('/books/{id}', [BookController::class, 'destroy'])->name('books.destroy');
