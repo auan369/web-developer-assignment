@@ -20,4 +20,16 @@ class BookController extends Controller
 
         return redirect()->route('home')->with('success', 'Book deleted successfully!');
     }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+        ]);
+
+        Book::create($request->all());
+
+        return redirect()->route('home')->with('success', 'Book added successfully!');
+    }
 }
