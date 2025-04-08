@@ -3,15 +3,16 @@
 namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Tests\UseTestDatabase;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication;
-    use UseTestDatabase;
+    use CreatesApplication, UseTestDatabase, RefreshDatabase;
 
     /**
      * Define environment setup.
@@ -21,11 +22,10 @@ abstract class TestCase extends BaseTestCase
      */
     protected function getEnvironmentSetUp($app)
     {
-        // Force the database connection to use the test database
-        $app['config']->set('database.default', 'testing');
-        $app['config']->set('database.connections.testing.database', 'laravel_test');
+        // Set the database connection to use the test database
+        $app['config']->set('database.connections.mysql.database', 'laravel_test');
         
-        // Force the session driver to file
+        // Set the session driver to file
         $app['config']->set('session.driver', 'file');
         
         // Disable CSRF protection for all tests
@@ -35,21 +35,24 @@ abstract class TestCase extends BaseTestCase
         
         // Remove CSRF middleware from all routes
         $this->withoutMiddleware(VerifyCsrfToken::class);
+        
+        // Disable middleware for all routes
+        Route::middleware([]);
     }
 
+    /**
+     * Setup the test environment.
+     *
+     * @return void
+     */
     protected function setUp(): void
     {
         parent::setUp();
         
-        // Ensure we're using the test database
-        $this->useTestDatabase();
-        
         // Start the session
         Session::start();
         
-        // Disable CSRF middleware for all routes
-        Route::middleware([])->group(function () {
-            // Your routes will be registered here
-        });
+        // Run migrations for the test database
+        $this->artisan('migrate:fresh');
     }
 }

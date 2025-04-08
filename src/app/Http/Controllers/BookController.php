@@ -38,4 +38,21 @@ class BookController extends Controller
 
         return redirect()->route('home')->with('success', 'Book added successfully!');
     }
+    
+    public function search(Request $request)
+    {
+        $request->validate([
+            'search_by' => 'required|string|in:title,author',
+            'query' => 'required|string',
+        ]);
+        
+        // Get the search parameters as strings
+        $searchBy = $request->input('search_by');
+        $query = $request->input('query');
+        
+        // Perform the search
+        $books = Book::where($searchBy, 'like', '%' . $query . '%')->get();
+        
+        return view('search', compact('books'));
+    }
 }
