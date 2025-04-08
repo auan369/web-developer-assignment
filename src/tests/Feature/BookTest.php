@@ -16,10 +16,10 @@ class BookTest extends TestCase
     public function testCreateAndRetrieveBook()
     {
         // Verify we're using the test database
-        $this->assertEquals('laravel_test', DB::connection('testing')->getDatabaseName());
+        $this->assertEquals('laravel_test', DB::connection()->getDatabaseName());
         
         // Create a new book
-        $book = Book::on('testing')->create([
+        $book = Book::create([
             'title' => 'Test Book',
             'author' => 'Test Author'
         ]);
@@ -30,7 +30,7 @@ class BookTest extends TestCase
         $this->assertEquals('Test Author', $book->author);
         
         // Retrieve the book from the database
-        $retrievedBook = Book::on('testing')->find($book->id);
+        $retrievedBook = Book::find($book->id);
         
         // Assert the retrieved book matches the created book
         $this->assertEquals($book->id, $retrievedBook->id);
@@ -46,7 +46,7 @@ class BookTest extends TestCase
     public function testUpdateBook()
     {
         // Create a book
-        $book = Book::on('testing')->create([
+        $book = Book::create([
             'title' => 'Original Title',
             'author' => 'Original Author'
         ]);
@@ -73,7 +73,7 @@ class BookTest extends TestCase
     public function testDeleteBook()
     {
         // Create a book
-        $book = Book::on('testing')->create([
+        $book = Book::create([
             'title' => 'Book To Delete',
             'author' => 'Author To Delete'
         ]);
@@ -85,6 +85,6 @@ class BookTest extends TestCase
         $book->delete();
         
         // Assert the book no longer exists
-        $this->assertNull(Book::on('testing')->find($bookId));
+        $this->assertNull(Book::find($bookId));
     }
 }

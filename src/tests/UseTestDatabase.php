@@ -4,23 +4,35 @@ namespace Tests;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Session;
 
 trait UseTestDatabase
 {
     /**
-     * Ensure the test database is used.
+     * Set up the test database connection.
      *
      * @return void
      */
-    protected function useTestDatabase()
+    protected function useTestDatabase(): void
     {
         // Force the database connection to use the test database
         Config::set('database.default', 'testing');
         Config::set('database.connections.testing.database', 'laravel_test');
         
-        // Reconnect to ensure we're using the test database
-        DB::purge();
+        // Force the session driver to file
+        Config::set('session.driver', 'file');
+        
+        // Set environment variables directly
+        putenv('DB_CONNECTION=testing');
+        putenv('DB_DATABASE=laravel_test');
+        putenv('SESSION_DRIVER=file');
+        
+        // Force the database connection to use the test database
+        DB::purge('testing');
         DB::reconnect('testing');
+        
+        // Start the session
+        Session::start();
         
         // Verify we're using the test database
         $this->verifyTestDatabase();
@@ -29,7 +41,7 @@ trait UseTestDatabase
     /**
      * Verify that we're using the test database
      */
-    protected function verifyTestDatabase()
+    protected function verifyTestDatabase(): void
     {
         // Get the current database name
         $currentDatabase = DB::connection()->getDatabaseName();
