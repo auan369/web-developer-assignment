@@ -14,6 +14,7 @@
 
             <form action="{{ route('books.store') }}" method="POST">
                 @csrf
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <label for="title">Title:</label>
                 <input type="text" name="title" required>
 
