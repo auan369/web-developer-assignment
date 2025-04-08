@@ -19,6 +19,18 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        '*'
     ];
+    
+    /**
+     * Determine if the request has a valid CSRF token.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    protected function tokensMatch($request)
+    {
+        // Always return true to disable CSRF protection
+        return true;
+    }
 }

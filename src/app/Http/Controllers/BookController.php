@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class BookController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('web');
+    }
+
     public function index()
     {
         $books = Book::all();  // Retrieve all books

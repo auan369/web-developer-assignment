@@ -17,6 +17,7 @@
                     <form action="{{ route('books.destroy', $book->id) }}" method="POST" onsubmit="return confirm('Are you sure?');">
                         @csrf
                         @method('DELETE')
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <button type="submit">Delete</button>
                     </form>
                 </td>
