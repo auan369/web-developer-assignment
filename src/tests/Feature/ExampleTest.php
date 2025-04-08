@@ -3,7 +3,8 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
+
 
 class ExampleTest extends TestCase
 {
@@ -12,10 +13,17 @@ class ExampleTest extends TestCase
      *
      * @return void
      */
+
     public function testBasicTest()
     {
         $response = $this->get('/');
 
         $response->assertStatus(200);
     }
+
+    public function testDatabaseConnection()
+    {
+        $this->assertEquals('laravel_test', DB::connection('testing')->getDatabaseName());
+    }
+
 }

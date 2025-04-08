@@ -28,3 +28,4 @@ services:
       MYSQL_PASSWORD: secret
       MYSQL_DATABASE: laravel
       MYSQL_ROOT_PASSWORD: secret
+      MYSQL_MULTIPLE_DATABASES: "laravel,laravel_test"

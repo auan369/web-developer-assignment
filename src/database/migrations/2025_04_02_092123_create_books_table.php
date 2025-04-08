@@ -12,9 +12,6 @@ class CreateBooksTable extends Migration
             $table->increments('id'); // Use increments for primary key in Laravel 6
             $table->string('title');
             $table->string('author');
-            // $table->text('description')->nullable();
-            // $table->string('isbn')->unique();
-            // $table->integer('published_year');
             $table->timestamps(); // Adds created_at & updated_at columns
         });
     }

@@ -24,6 +24,12 @@
     </filter>
     <php>
         <server name="APP_ENV" value="testing"/>
+        <server name="DB_CONNECTION" value="testing"/>
+        <server name="DB_HOST" value="mysql"/>
+        <server name="DB_PORT" value="3306"/>
+        <server name="DB_DATABASE" value="laravel_test"/>
+        <server name="DB_USERNAME" value="laravel"/>
+        <server name="DB_PASSWORD" value="secret"/>
         <server name="BCRYPT_ROUNDS" value="4"/>
         <server name="CACHE_DRIVER" value="array"/>
         <server name="MAIL_DRIVER" value="array"/>
@@ -34,5 +40,7 @@
         <server name="APP_PACKAGES_CACHE" value="bootstrap/cache/packages.phpunit.php"/>
         <server name="APP_ROUTES_CACHE" value="bootstrap/cache/routes.phpunit.php"/>
         <server name="APP_EVENTS_CACHE" value="bootstrap/cache/events.phpunit.php"/>
+        <env name="DB_CONNECTION" value="testing"/>
+        <env name="DB_DATABASE" value="laravel_test"/>
     </php>
 </phpunit>
