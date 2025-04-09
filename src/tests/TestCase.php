@@ -22,8 +22,11 @@ abstract class TestCase extends BaseTestCase
      */
     protected function getEnvironmentSetUp($app)
     {
+        // Set the default database connection to testing
+        $app['config']->set('database.default', 'testing');
+        
         // Set the database connection to use the test database
-        $app['config']->set('database.connections.mysql.database', 'laravel_test');
+        $app['config']->set('database.connections.testing.database', 'laravel_test');
         
         // Set the session driver to file
         $app['config']->set('session.driver', 'file');
@@ -53,6 +56,6 @@ abstract class TestCase extends BaseTestCase
         Session::start();
         
         // Run migrations for the test database
-        $this->artisan('migrate:fresh');
+        $this->artisan('migrate:fresh', ['--database' => 'testing']);
     }
 }
