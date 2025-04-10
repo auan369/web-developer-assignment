@@ -15,7 +15,19 @@ class BookController extends Controller
 
     public function index()
     {
-        $books = Book::all();  // Retrieve all books
+        $books = Book::orderBy('title')->get();  // Retrieve all books sorted by title
+        return view('home', compact('books'));  // Pass the books to the home view
+    }
+    
+    public function indexTitle()
+    {
+        $books = Book::orderBy('title')->get();  // Retrieve all books sorted by title
+        return view('home', compact('books'));  // Pass the books to the home view
+    }
+    
+    public function indexAuthor()
+    {
+        $books = Book::orderBy('author')->get();  // Retrieve all books sorted by author
         return view('home', compact('books'));  // Pass the books to the home view
     }
     

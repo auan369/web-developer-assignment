@@ -3,8 +3,8 @@
 <table>
     <thead>
         <tr>
-            <th>Title</th>
-            <th>Author</th>
+            <th><a href="{{ route('books.title') }}">Title</a></th>
+            <th><a href="{{ route('books.author') }}">Author</a></th>
             <th>Delete</th>
         </tr>
     </thead>
