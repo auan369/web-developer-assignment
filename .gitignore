@@ -4,5 +4,3 @@ docker-compose.override.yml
 .cloneignore
 Jenkinsfile*
 /clone*
-.env.testing
-.env
