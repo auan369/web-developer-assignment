@@ -1,6 +1,9 @@
-<nav>
-    <ul>
-        <li><a href="{{ url('/') }}">Home</a></li>
-        <li><a href="{{ url('/search') }}">Search</a></li>
-    </ul>
+<nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
+    <h1 class="mb-0">
+        Book Management System
+    </h1>
+    <div class="navbar-nav">
+        <a class="nav-link" href="{{ url('/') }}">Home</a>
+        <a class="nav-link" href="{{ url('/search') }}">Search</a>
+    </div>
 </nav>

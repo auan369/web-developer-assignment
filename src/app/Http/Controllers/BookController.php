@@ -84,8 +84,13 @@ class BookController extends Controller
         // Perform the search
         $books = Book::where($searchBy, 'like', "%{$query}%")->get();
         
-        // Return the search results view with the books
-        return view('search-results', compact('books', 'searchBy', 'query'));
+        // Return the search view with the books
+        return view('search', compact('books', 'searchBy', 'query'));
+    }
+    
+    public function showSearchForm()
+    {
+        return view('search');
     }
     
     public function exportCsv(Request $request)
@@ -99,19 +104,21 @@ class BookController extends Controller
             $books = Book::all();
         } elseif ($exportType === 'titles') {
             $books = Book::select('title')->get();
-        } elseif ($exportType === 'authors') {
+        } else {
             $books = Book::select('author')->get();
         }
-        
+
         $headers = [
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="books.csv"',
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=books.csv",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
         ];
-        
+
         $callback = function() use ($books, $exportType) {
             $file = fopen('php://output', 'w');
             
-            // Add CSV headers
             if ($exportType === 'all') {
                 fputcsv($file, ['Title', 'Author']);
                 foreach ($books as $book) {
@@ -122,7 +129,7 @@ class BookController extends Controller
                 foreach ($books as $book) {
                     fputcsv($file, [$book->title]);
                 }
-            } elseif ($exportType === 'authors') {
+            } else {
                 fputcsv($file, ['Author']);
                 foreach ($books as $book) {
                     fputcsv($file, [$book->author]);
@@ -131,7 +138,7 @@ class BookController extends Controller
             
             fclose($file);
         };
-        
+
         return response()->stream($callback, 200, $headers);
     }
     
@@ -146,31 +153,30 @@ class BookController extends Controller
             $books = Book::all();
         } elseif ($exportType === 'titles') {
             $books = Book::select('title')->get();
-        } elseif ($exportType === 'authors') {
+        } else {
             $books = Book::select('author')->get();
         }
+
         $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><books></books>');
-        
+
         foreach ($books as $book) {
-            $bookXml = $xml->addChild('book');
-            if ($exportType === 'all') {
-                // $bookXml->addChild('id', $book->id);
-                $bookXml->addChild('title', htmlspecialchars($book->title));
-                $bookXml->addChild('author', htmlspecialchars($book->author));
-                // $bookXml->addChild('created_at', $book->created_at);
-                // $bookXml->addChild('updated_at', $book->updated_at);
-            } elseif ($exportType === 'titles') {
-                $bookXml->addChild('title', htmlspecialchars($book->title));
-            } elseif ($exportType === 'authors') {
-                $bookXml->addChild('author', htmlspecialchars($book->author));
+            $bookNode = $xml->addChild('book');
+            if ($exportType === 'all' || $exportType === 'titles') {
+                $bookNode->addChild('title', htmlspecialchars($book->title));
+            }
+            if ($exportType === 'all' || $exportType === 'authors') {
+                $bookNode->addChild('author', htmlspecialchars($book->author));
             }
         }
-        
+
         $headers = [
-            'Content-Type' => 'application/xml',
-            'Content-Disposition' => 'attachment; filename="books.xml"',
+            "Content-type" => "text/xml",
+            "Content-Disposition" => "attachment; filename=books.xml",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
         ];
-        
+
         return response($xml->asXML(), 200, $headers);
     }
 }

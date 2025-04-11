@@ -11,8 +11,7 @@ Route::get('/books/export/xml', 'BookController@exportXml')->name('books.export.
 Route::resource('books', 'BookController')->only(['destroy', 'store', 'edit', 'update']);
 Route::get('/books/search', 'BookController@search')->name('books.search');
 
-Route::get('/search', function () {
-    return view('search');
-});
+// Search page route
+Route::get('/search', 'BookController@showSearchForm')->name('search');
 
 
