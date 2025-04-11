@@ -12,18 +12,32 @@
                 <p style="color: green;">{{ session('success') }}</p>
             @endif
 
-            <form action="{{ route('books.store') }}" method="POST">
-                @csrf
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <label for="title">Title:</label>
-                <input type="text" name="title" required>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">Books</div>
 
-                <label for="author">Author:</label>
-                <input type="text" name="author" required>
-
-                <button type="submit">Add Book</button>
-            </form>
-    </div>
-     <!-- Include the book table partial -->
-     @include('partials.book-table', ['books' => $books])
+                            <div class="card-body">
+                                
+                                <form method="POST" action="{{ route('books.store') }}">
+                                    @csrf
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <label for="title">Title:</label>
+                                    <input type="text" name="title" required>
+                                    
+                                    <label for="author">Author:</label>
+                                    <input type="text" name="author" required>
+                                    
+                                    <button type="submit">Add Book</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Include the book table partial -->
+        @include('partials.book-table', ['books' => $books])
+        @include('partials.export-form')
 @endsection
