@@ -23,10 +23,18 @@
         </whitelist>
     </filter>
     <php>
+        <env name="DB_CONNECTION" value="mysql"/>
+        <env name="DB_DATABASE" value="laravel_test"/>
+        <env name="DB_USERNAME" value="laravel"/>
+        <env name="DB_PASSWORD" value="secret"/>
+        <env name="APP_ENV" value="testing"/>
+        <env name="CACHE_DRIVER" value="array"/>
+        <env name="MAIL_DRIVER" value="array"/>
+        <env name="QUEUE_CONNECTION" value="sync"/>
+        <env name="SESSION_DRIVER" value="array"/>
+        <env name="BCRYPT_ROUNDS" value="4"/>
+        <server name="DB_CONNECTION" value="mysql"/>
         <server name="APP_ENV" value="testing"/>
-        <server name="DB_CONNECTION" value="testing"/>
-        <server name="DB_HOST" value="mysql"/>
-        <server name="DB_PORT" value="3306"/>
         <server name="DB_DATABASE" value="laravel_test"/>
         <server name="DB_USERNAME" value="laravel"/>
         <server name="DB_PASSWORD" value="secret"/>
@@ -34,14 +42,11 @@
         <server name="CACHE_DRIVER" value="array"/>
         <server name="MAIL_DRIVER" value="array"/>
         <server name="QUEUE_CONNECTION" value="sync"/>
-        <server name="SESSION_DRIVER" value="file"/>
+        <server name="SESSION_DRIVER" value="array"/>
         <server name="APP_CONFIG_CACHE" value="bootstrap/cache/config.phpunit.php"/>
         <server name="APP_SERVICES_CACHE" value="bootstrap/cache/services.phpunit.php"/>
         <server name="APP_PACKAGES_CACHE" value="bootstrap/cache/packages.phpunit.php"/>
         <server name="APP_ROUTES_CACHE" value="bootstrap/cache/routes.phpunit.php"/>
         <server name="APP_EVENTS_CACHE" value="bootstrap/cache/events.phpunit.php"/>
-        <env name="DB_CONNECTION" value="testing"/>
-        <env name="DB_DATABASE" value="laravel_test"/>
-        <env name="SESSION_DRIVER" value="file"/>
     </php>
 </phpunit>

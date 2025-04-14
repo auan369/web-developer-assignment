@@ -33,9 +33,8 @@ class BookController extends Controller
     
     public function destroy($id)
     {
-        $book = Book::findOrFail($id);
-        $book->delete();
-
+        Book::deleteBook($id);
+        
         return redirect()->route('home')->with('success', 'Book deleted successfully!');
     }
 
@@ -46,8 +45,8 @@ class BookController extends Controller
             'author' => 'required|string|max:255',
         ]);
 
-        Book::create($request->all());
-
+        $book = Book::createBook($request->all());
+        
         return redirect()->route('home')->with('success', 'Book added successfully!');
     }
 
@@ -64,9 +63,8 @@ class BookController extends Controller
             'author' => 'required|string|max:255',
         ]);
 
-        $book = Book::findOrFail($id);
-        $book->update($request->all());
-
+        $book = Book::updateBook($id, $request->all());
+        
         return redirect()->route('home')->with('success', 'Book updated successfully!');
     }
     

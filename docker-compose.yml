@@ -18,6 +18,23 @@ services:
     volumes:
     - ./src:/var/www/html
 
+  laravel_test:
+    image: yaraku/assignment:$COMPOSE_PROJECT_NAME
+    container_name: $COMPOSE_PROJECT_NAME-laravel_test
+    environment:
+      DB_DATABASE: laravel_test
+      DB_HOST: mysql
+      DB_PASSWORD: secret
+      DB_USERNAME: laravel
+      APP_DEBUG: 'true'
+      APP_ENV: testing
+      APP_KEY: ayGbuqVXJakHHvMTZCjKqzhVqMNsHMQs
+      LOG_CHANNEL: stderr
+    ports:
+    - '81:81' 
+    volumes:
+    - ./src:/var/www/html
+
   mysql:
     image: mysql:8
     container_name: $COMPOSE_PROJECT_NAME-mysql
@@ -29,3 +46,5 @@ services:
       MYSQL_DATABASE: laravel
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_MULTIPLE_DATABASES: "laravel,laravel_test"
+    volumes:
+       - ./mysql-init:/docker-entrypoint-initdb.d
