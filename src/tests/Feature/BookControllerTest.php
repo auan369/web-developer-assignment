@@ -89,4 +89,38 @@ class BookControllerTest extends TestCase
         // Assert the book is no longer in the database
         $this->assertDatabaseMissing('books', ['id' => $book->id]);
     }
+
+    public function testStoreBookValidation()
+    {
+        $bookData = ['author' => 'John Doe']; // Missing title
+        $this->expectException(\Illuminate\Validation\ValidationException::class);
+
+        $request = new Request($bookData);
+        $response = $this->bookController->store($request);
+
+    }
+
+    public function testStoreBookInvalidData()
+    {
+        $bookData = ['title' => '', 'author' => 'John Doe']; // Invalid title
+        $this->expectException(\Illuminate\Validation\ValidationException::class);
+        $request = new Request($bookData);
+        $response = $this->bookController->store($request);
+    }
+
+    public function testUpdateNonExistentBook()
+    {
+        $updatedData = ['title' => 'Updated Title', 'author' => 'John Doe'];
+
+        // Expecting a ModelNotFoundException
+        $this->expectException(\Illuminate\Database\Eloquent\ModelNotFoundException::class);
+        $this->bookController->update(new Request($updatedData), 999); // Non-existent ID
+    }
+
+    public function testDeleteNonExistentBook()
+    {
+        // Expecting a ModelNotFoundException
+        $this->expectException(\Illuminate\Database\Eloquent\ModelNotFoundException::class);
+        $this->bookController->destroy(999); // Non-existent ID
+    }
 }
