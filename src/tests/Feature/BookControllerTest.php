@@ -18,9 +18,6 @@ class BookControllerTest extends TestCase
     {
         parent::setUp();
         $this->bookController = new BookController();
-        //Print the database connection
-        $currentDatabase = DB::connection()->getDatabaseName();
-        echo "Current Database: " . $currentDatabase . "\n"; // Output the current database name
     }
 
     public function testStoreBook()
