@@ -33,7 +33,7 @@ docker-compose exec laravel_test php artisan migrate
 To run the tests in the `laravel_test` environment:
 
 ```bash
-docker-compose exec laravel_test php artisan test
+docker-compose exec laravel_test ./vendor/bin/phpunit
 ```
 
 Note that the changes you make to local files will be automatically reflected in the container.
