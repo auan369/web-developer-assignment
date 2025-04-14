@@ -28,6 +28,14 @@ docker-compose exec laravel php artisan migrate
 docker-compose exec laravel_test php artisan migrate
 ```
 
+## Seeding Database
+
+- To seed the production databse:
+
+```bash
+docker-compose exec laravel php artisan db:seed --class=BookSeeder
+```
+
 ## Run Tests
 
 To run the tests in the `laravel_test` environment:
