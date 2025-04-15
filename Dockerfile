@@ -10,6 +10,7 @@ RUN composer install --working-dir $LARAVEL_PATH --ignore-platform-reqs --no-pro
 COPY src $LARAVEL_PATH
 RUN composer install --working-dir $LARAVEL_PATH --ignore-platform-reqs --no-progress --optimize-autoloader
 
+FROM richarvey/nginx-php-fpm:1.7.2
 FROM php:7.4-apache
 ARG LARAVEL_PATH
 
